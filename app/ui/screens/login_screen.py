@@ -33,7 +33,7 @@ class LoginScreen(Screen):
             source='resources/images/skin_background.jpg',  # 需要添加适当的背景图片
             opacity=0.2,
             allow_stretch=True,
-            keep_ratio=False
+            keep_ratio=False,
         )
         
         # 添加标语

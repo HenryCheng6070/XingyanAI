@@ -2,8 +2,20 @@
 星妍AI应用的通用样式定义
 """
 
-# 颜色定义
-COLORS = {
+def hex_to_rgba(hex_color):
+    """将十六进制颜色代码转换为RGBA格式（0-1范围）"""
+    hex_color = hex_color.lstrip('#')
+    if len(hex_color) == 6:
+        r, g, b = tuple(int(hex_color[i:i+2], 16) / 255 for i in (0, 2, 4))
+        return (r, g, b, 1)
+    elif len(hex_color) == 8:
+        r, g, b, a = tuple(int(hex_color[i:i+2], 16) / 255 for i in (0, 2, 4, 6))
+        return (r, g, b, a)
+    else:
+        raise ValueError(f"无效的十六进制颜色代码: {hex_color}")
+
+# 十六进制颜色定义（用于参考）
+HEX_COLORS = {
     'primary': '#6E8CA0',  # 主色调（蓝灰色）
     'primary_light': '#A5BFD3',  # 浅主色调
     'secondary': '#78C4D4',  # 次要色调（浅蓝色）
@@ -15,6 +27,24 @@ COLORS = {
     'warning': '#FFC107',  # 警告色（黄色）
     'error': '#F44336',  # 错误色（红色）
     'border': '#E0E0E0',  # 边框颜色
+    'text_secondary': '#757575',
+}
+
+# 颜色定义（Kivy兼容的RGBA格式）
+COLORS = {
+    'primary': hex_to_rgba('#6E8CA0'),
+    'primary_light': hex_to_rgba('#A5BFD3'),
+    'secondary': hex_to_rgba('#78C4D4'),
+    'background': hex_to_rgba('#F5F7FA'),
+    'text': hex_to_rgba('#333333'),
+    'text_light': hex_to_rgba('#888888'),
+    'white': hex_to_rgba('#FFFFFF'),
+    'success': hex_to_rgba('#4CAF50'),
+    'warning': hex_to_rgba('#FFC107'),
+    'error': hex_to_rgba('#F44336'),
+    'border': hex_to_rgba('#E0E0E0'),
+    'text_secondary': hex_to_rgba('#757575'),
+    'text_primary': hex_to_rgba('#333333'),  # 添加这一行，使用与'text'相同的颜色值
 }
 
 # 字体大小
@@ -25,6 +55,7 @@ FONT_SIZES = {
     'body': '16sp',
     'small': '14sp',
     'tiny': '12sp',
+    'button': '18sp',
 }
 
 # 间距

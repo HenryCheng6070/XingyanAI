@@ -4,17 +4,17 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from kivy.uix.image import Image
-from kivy.uix.button import Button
 from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.app import App
 from kivy.properties import StringProperty
-
+from kivy.uix.button import Button  # 添加这一行
 from app.ui.components.rounded_button import RoundedButton
 from app.ui.components.card import Card
 from app.ui.components.status_bar import StatusBar
 from app.ui.components.circular_progress import CircularProgress
 from app.ui.styles import COLORS, FONT_SIZES, SPACING
+from kivy.graphics import Color, Rectangle
 
 class MainScreen(Screen):
     def __init__(self, **kwargs):
@@ -104,8 +104,7 @@ class MainScreen(Screen):
         dashboard_card = Card(
             orientation='vertical',
             size_hint_y=None,
-            height=dp(250),
-            padding=[dp(15), dp(15), dp(15), dp(15)]
+            height=dp(250)
         )
         
         # 仪表盘标题
@@ -115,39 +114,24 @@ class MainScreen(Screen):
             font_size=FONT_SIZES['body'],
             size_hint_y=None,
             height=dp(30),
-            halign='center',
-            color=COLORS['text_primary']
+            color=[0.3, 0.3, 0.3, 1]
         )
         
-        # 仪表盘内容
-        gauge_layout = BoxLayout(orientation='vertical')
+        # 使用圆形进度组件替代静态图像
+        dashboard_layout = BoxLayout(orientation='vertical', padding=dp(10))
         
-        # 添加圆形进度条
+        # 创建圆形进度指示器
         progress = CircularProgress(
-            thickness=dp(10),
-            progress=0.75,
+            progress=75,  # 示例进度值
             size_hint=(None, None),
             size=(dp(150), dp(150)),
             pos_hint={'center_x': 0.5, 'center_y': 0.5}
         )
         
-        # 添加检测按钮
-        scan_button = RoundedButton(
-            text='开始检测',
-            font_name='Chinese',
-            font_size=FONT_SIZES['button'],
-            size_hint=(None, None),
-            size=(dp(150), dp(40)),
-            pos_hint={'center_x': 0.5},
-            background_color=COLORS['primary'],
-            on_release=self.go_to_camera
-        )
-        
-        gauge_layout.add_widget(progress)
-        gauge_layout.add_widget(scan_button)
+        dashboard_layout.add_widget(progress)
         
         dashboard_card.add_widget(dashboard_title)
-        dashboard_card.add_widget(gauge_layout)
+        dashboard_card.add_widget(dashboard_layout)
         
         content_layout.add_widget(dashboard_card)
         
@@ -371,9 +355,22 @@ class MainScreen(Screen):
             height=dp(60),
             padding=[dp(20), dp(5), dp(20), dp(5)],
             spacing=dp(30),
-            background_color=COLORS['white']
+            #background_color=COLORS['white']
         )
-        
+            # 然后添加 canvas 指令来设置背景颜色
+        with nav_bar.canvas.before:
+            Color(*COLORS['white'])  # 解包颜色值
+            self.nav_bar_rect = Rectangle(pos=nav_bar.pos, size=nav_bar.size)
+
+        # 添加绑定以确保背景矩形跟随布局大小变化
+        def update_rect(self, instance, value):  
+            instance.nav_bar_rect.pos = instance.pos
+            instance.nav_bar_rect.size = instance.size
+
+            nav_bar.bind(pos=update_rect, size=update_rect)
+
+
+
         # 首页按钮
         home_btn = BoxLayout(orientation='vertical')
         home_icon = Label(text='🏠', font_size=FONT_SIZES['h2'])
