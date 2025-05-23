@@ -83,7 +83,7 @@ jobs:
         uses: ArtemSBulgakov/buildozer-action@v1
         with:
           command: buildozer android debug
-          buildozer_version: stable
+          buildozer_version: 1.4.0
           
       - name: 检查构建结果
         run: |
