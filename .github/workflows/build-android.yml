@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: 检出代码
         uses: actions/checkout@v2
@@ -70,7 +70,7 @@ jobs:
           android.permissions = CAMERA,INTERNET,WRITE_EXTERNAL_STORAGE
           android.api = 30
           android.minapi = 21
-          android.ndk = 25b
+          android.ndk = 27.2.12479018
           android.accept_sdk_license = True
           android.archs = arm64-v8a
           
@@ -80,7 +80,9 @@ jobs:
           EOF
 
       - name: 构建APK
-        run: |
+       run: |
+          export ANDROID_NDK_HOME=/usr/local/lib/android/sdk/ndk/27.2.12479018
+          export ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018
           buildozer -v android debug
           
       - name: 检查构建结果
