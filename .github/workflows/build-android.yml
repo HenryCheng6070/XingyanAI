@@ -80,8 +80,10 @@ jobs:
           EOF
 
       - name: 构建APK
-        run: |
-          buildozer -v android debug
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          command: buildozer android debug
+          buildozer_version: stable
           
       - name: 检查构建结果
         run: |
