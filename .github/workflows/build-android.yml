@@ -68,12 +68,13 @@ jobs:
           osx.kivy_version = 2.1.0
           fullscreen = 0
           android.permissions = CAMERA,INTERNET,WRITE_EXTERNAL_STORAGE
-          android.api = 30
+          android.api = 28
           android.minapi = 21
-          android.ndk = 25c
+          android.ndk = 25b
           android.accept_sdk_license = True
           android.archs = arm64-v8a
-          
+          android.gradle_dependencies = org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50
+          android.add_gradle_repositories = maven { url 'https://maven.google.com' }
           [buildozer]
           log_level = 2
           warn_on_root = 1
