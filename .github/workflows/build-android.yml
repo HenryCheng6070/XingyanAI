@@ -73,7 +73,7 @@ jobs:
           buildozer android debug
 
       - name: 上传APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@master
         with:
           name: app-debug
           path: bin/*.apk
