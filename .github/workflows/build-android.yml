@@ -80,7 +80,7 @@ jobs:
           EOF
 
       - name: 构建APK
-       run: |
+        run: |
           export ANDROID_NDK_HOME=/usr/local/lib/android/sdk/ndk/27.2.12479018
           export ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/27.2.12479018
           buildozer -v android debug
