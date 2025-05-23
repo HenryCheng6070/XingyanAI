@@ -80,10 +80,8 @@ jobs:
           EOF
 
       - name: 构建APK
-        uses: mikeee/kivy-buildozer-action@v1.5.3
-        with:
-          command: buildozer android debug
-          buildozer_version: 1.4.0
+        run: |
+          buildozer -v android debug
           
       - name: 检查构建结果
         run: |
